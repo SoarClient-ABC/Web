@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+    <!-- SEO 基础标签 -->
+    <meta charset="UTF-8">
+    <meta name="description" content="SoarClient-ABC是由ABCOC fork的 Soarv7 版本，是一个以高性能、优秀视觉著称的Minecraft 1.8客户端。">
+    <meta name="keywords" content="Soar, SoarClient, SoarLauncher, EldoDebug, ABCOC, emm119, PVP, PVPClient, Minecraft, Minecraft1.8, MinecraftPVP, 我的世界, 我的世界客户端, 高性能, 黑客视觉, 优秀视觉">
+    <meta http-equiv="content-language" content="zh-CN">
+
+    <!-- Open Graph 标签 -->
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SoarClient - 极致的我的世界客户端">
+    <meta property="og:description" content="SoarClient-ABC是由ABCOC fork的 Soarv7 版本，是一个以高性能、优秀视觉著称的Minecraft 1.8客户端。">
+    <meta property="og:url" content="https://www.soarclient.org">
+    <meta property="og:site_name" content="SoarClient - 极致的我的世界客户端">
+    <meta property="og:image" content="./assets/img/soarclient_64.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoarClient - 极致的我的世界客户端</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./assets/3/3.1.0/iconify.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .glass-effect {
+            background: rgba(17, 19, 36, 0.5);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .animated-gradient {
+            background-image: linear-gradient(45deg, #8B5CF6, #3B82F6, #8B5CF6, #3B82F6);
+            background-size: 300% auto;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        .animated-gradient::before {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            background: linear-gradient(45deg, rgba(139, 92, 246, 0.5), rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.5));
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+            filter: blur(12px);
+        }
+        .animated-gradient:hover {
+            background-position: 100% center;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow:
+                0 10px 25px rgba(139, 92, 246, 0.3),
+                0 0 20px rgba(59, 130, 246, 0.2);
+            animation: gradientShift 2s ease-in-out infinite;
+        }
+        .animated-gradient:hover::before {
+            opacity: 1;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .nav-indicator {
+            width: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateX(0);
+        }
+        .nav-item.active ~ .nav-indicator,
+        .nav-item:hover ~ .nav-indicator {
+            opacity: 1;
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-item.active {
+            color: white;
+        }
+
+        /* logo悬停 */
+        .spark-custom-iwzv {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+        }
+        .spark-custom-iwzv::before {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(45deg, rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.3));
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+            filter: blur(6px);
+        }
+        .spark-custom-iwzv:hover {
+            transform: scale(1.08);
+        }
+        .spark-custom-iwzv:hover::before {
+            opacity: 1;
+        }
+        .spark-custom-iwzv:hover img {
+            transform: rotate(8deg) scale(1.1);
+            box-shadow:
+                0 8px 24px rgba(139, 92, 246, 0.4),
+                0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        .spark-custom-iwzv:hover span {
+            background: linear-gradient(45deg, #8B5CF6, #3B82F6, #8B5CF6);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 1.5s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .spark-custom-iwzv img {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .spark-custom-iwzv span {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* 页脚悬停 */
+        .footer-section {
+            position: relative;
+            padding: 24px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            background: transparent;
+            overflow: hidden;
+        }
+        .footer-section::before {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(8px);
+        }
+        .footer-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .footer-section:hover::before {
+            opacity: 1;
+        }
+        .footer-section:hover::after {
+            opacity: 1;
+        }
+        .footer-section:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 页脚链接悬停 */
+        .footer-section a {
+            position: relative;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            padding: 8px;
+            margin: -8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .footer-section a:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+            color: white;
+        }
+        .footer-section a:hover .iconify {
+            transform: scale(1.1);
+        }
+
+        /* 滚动动画效果 */
+        #scrollToFeatures {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        #scrollToFeatures0, #scrollToMain{}
+
+        /* 功能区域滚动时的颜色变化 */
+        #featuresSection section {
+            transition: all 0.8s ease-in-out;
+        }
+        #featuresSection section.section-active {
+            transform: scale(1.02);
+        }
+        #featuresSection section.section-active .glass-effect {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(17, 19, 36, 0.8);
+        }
+
+        /* 模块卡片悬停效果增强 */
+        #featuresSection .glass-effect {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+        }
+        #featuresSection .glass-effect::before {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            background: linear-gradient(45deg, transparent, rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.3), transparent);
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+            filter: blur(12px);
+        }
+        #featuresSection .glass-effect:hover {
+            transform: translateY(-12px) scale(1.08);
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(139, 92, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+        #featuresSection .glass-effect:hover::before {
+            opacity: 1;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% {
+                filter: blur(8px);
+                opacity: 0.6;
+            }
+            50% {
+                filter: blur(12px);
+                opacity: 1;
+            }
+        }
+
+        /* 渐进式加载动画 */
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 功能区域进入动画 */
+        #featuresSection section:nth-child(odd) .container > div:first-child {
+            animation: slideInFromLeft 1s ease-out;
+        }
+        #featuresSection section:nth-child(even) .container > div:last-child {
+            animation: slideInFromRight 1s ease-out;
+        }
+        #featuresSection section .grid > div {
+            animation: slideInFromBottom 0.8s ease-out;
+        }
+        #featuresSection section .grid > div:nth-child(1) { animation-delay: 0.1s; }
+        #featuresSection section .grid > div:nth-child(2) { animation-delay: 0.2s; }
+        #featuresSection section .grid > div:nth-child(3) { animation-delay: 0.3s; }
+        #featuresSection section .grid > div:nth-child(4) { animation-delay: 0.4s; }
+        #featuresSection section .grid > div:nth-child(5) { animation-delay: 0.5s; }
+        #featuresSection section .grid > div:nth-child(6) { animation-delay: 0.6s; }
+
+        /* 主页区域进入动画 */
+        #mainSection section:nth-child(odd) .container > div:first-child {
+            animation: slideInFromLeft 1s ease-out;
+        }
+        #mainSection section:nth-child(even) .container > div:last-child {
+            animation: slideInFromRight 1s ease-out;
+        }
+        #mainSection section .grid > div {
+            animation: slideInFromBottom 0.8s ease-out;
+        }
+        #mainSection section .grid > div:nth-child(1) { animation-delay: 0.1s; }
+        #mainSection section .grid > div:nth-child(2) { animation-delay: 0.2s; }
+        #mainSection section .grid > div:nth-child(3) { animation-delay: 0.3s; }
+        #mainSection section .grid > div:nth-child(4) { animation-delay: 0.4s; }
+        #mainSection section .grid > div:nth-child(5) { animation-delay: 0.5s; }
+        #mainSection section .grid > div:nth-child(6) { animation-delay: 0.6s; }
+
+        .comparison-table-container {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(50px);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table th {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+
+        .comparison-table td {
+            font-size: 1.1em;
+            color: #c0c0c0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .client-logo {
+            padding-left: 26px;
+            height: 40px;
+            width: auto;
+        }
+
+        .fps-value {
+            color: #4CAF50;
+        }
+        .fps-value0 {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .mods-value {
+            color: #2196F3;
+        }
+        .mods-value0 {
+            font-weight: bold;
+            color: #2196F3;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .action-buttons a, .action-buttons button {
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+        }
+
+        .test-link {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .test-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .download-button {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        .download-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script src="assets/static/25_6/holder.js"></script>
+</head>
+<body class="bg-[#0D0E1A] text-white font-[&apos;Noto_Sans_SC&apos;,_sans-serif] overflow-x-hidden">
+    <div id="app" class="app spark-custom-app">
+        <main id="in0l" class="in0l spark-custom-in0l">
+            <div data-section-id="Header" data-section-type="header" id="iikh" class="iikh spark-custom-iikh" style="width: 100%">
+                <header class="fixed top-0 left-0 right-0 z-40 glass-effect">
+                    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                        <div id="iwzv" class="flex items-center gap-4 iwzv spark-custom-iwzv">
+                            <a href="#" class="inline-flex items-center gap-2"><img alt="SoarClient Logo" class="w-10 h-10 rounded-md" src="./assets/images/soarlogo_64.png"><span class="text-xl font-bold tracking-wider">SoarClient</span></a>
+                        </div>
+                        <div id="iyazq" class="hidden md:flex items-center gap-8 text-gray-300 iyazq spark-custom-iyazq relative">
+                            <div class="nav-indicator absolute top-0 h-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-300 ease-out"></div>
+                            <a href="#" id="scrollToMain" data-nav="home" data-scroll class="nav-item hover:text-white transition-colors relative py-2 active">首页</a>
+                            <a href="#" id="scrollToFeatures0" data-nav="features" data-scroll class="nav-item hover:text-white transition-colors relative py-2" >功能</a>
+                            <a href="https://soarclient.org/download" class="nav-item flex items-center gap-2 hover:text-white transition-colors relative py-2">下载<span class="bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">NEW</span></a>
+                            <a href="#" class="nav-item hover:text-white transition-colors relative py-2">文档</a>
+                            <a href="#" class="nav-item hover:text-white transition-colors relative py-2">社区</a>
+                            <a href="#" data-nav="ecosystem" class="nav-item hover:text-white transition-colors relative py-2">生态合作</a>
+                            <a href="#" data-nav="about" class="nav-item hover:text-white transition-colors relative py-2">了解我们</a>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <a href="https://discord.gg/zFYV4wr84P" class="hidden sm:flex items-center gap-2 text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-lg"><span class="iconify" data-icon="ri:discord-fill"></span><span>加入Discord</span></a><a href="https://soarclient.org/download" class="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold px-4 py-2 rounded-lg shadow-lg hover:shadow-blue-500/50 transition-all duration-300 transform hover:scale-105"><span class="iconify" data-icon="ph:download-simple-bold"></span><span>立即下载</span><span class="iconify" data-icon="ph:arrow-right-bold"></span></a>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+            <div data-section-id="HeroSection" data-section-type="section" id="mainSection" style="width: 100%">
+                <section class="relative min-h-screen flex flex-col items-center justify-center text-white overflow-hidden bg-cover bg-center bg-no-repeat holderjs" style="background-image: url('./assets/images/nacho.png');">
+                    <div class="absolute inset-0 bg-[#0D0E1A]/60"></div>
+                    <div id="im53b" class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 pt-24 pb-10 w-full im53b spark-custom-im53b">
+                        <div id="ii87h" class="flex-grow flex flex-col items-center justify-center ii87h spark-custom-ii87h">
+                            <div id="ivqnf" class="animate-in flex items-center gap-3 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 backdrop-blur-xl rounded-full px-6 py-2 border border-white/20 mb-6" style="animation-delay: 0.2s;">
+                                <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                                <span class="text-blue-300 text-sm font-medium tracking-wider uppercase">THE ULTIMATE MINECRAFT CLIENT</span>
+                                <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                            </div>
+
+                            <h1 id="iin2j" class="animate-in text-6xl md:text-8xl font-black tracking-tight" style="animation-delay: 0.4s;">
+                                SoarClient
+                            </h1>
+                            <p id="imczu" class="animate-in max-w-3xl mt-6 text-lg md:text-xl text-gray-300" style="animation-delay: 0.6s;">
+                                专为极致体验打造，提升你的《我的世界》性能、视觉与功能。
+                            </p>
+                            <div id="ik3mi" class="animate-in flex flex-wrap justify-center gap-4 mt-8" style="animation-delay: 0.8s;">
+                                <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-sm">
+                                    <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>极致性能
+                                </div>
+                                <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-sm">
+                                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>精美视觉
+                                </div>
+                                <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-sm">
+                                    <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>丰富模块
+                                </div>
+                                <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-sm">
+                                    <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>活跃社区
+                                </div>
+                            </div>
+                            <div id="ixfxg" class="animate-in flex flex-wrap justify-center gap-4 mt-8 ixfxg spark-custom-ixfxg" style="animation-delay: 1s;">
+                                <a href="https://soarclient.org/download" id="ie0s9" class="animated-gradient text-white font-bold text-lg px-8 py-4 rounded-lg flex items-center gap-3 shadow-lg hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-105 ie0s9 spark-custom-ie0s9">
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 256 256" data-original="&lt;span class=&quot;iconify&quot; data-icon=&quot;ph:user-plus-bold&quot; data-width=&quot;24&quot;&gt;&lt;/span&gt;" class="iconify">
+                                        <path fill="currentColor" d="M256 136a12 12 0 0 1-12 12h-8v8a12 12 0 0 1-24 0v-8h-8a12 12 0 0 1 0-24h8v-8a12 12 0 0 1 24 0v8h8a12 12 0 0 1 12 12m-54.81 56.28a12 12 0 1 1-18.38 15.44C169.12 191.42 145 172 108 172c-28.89 0-55.46 12.68-74.81 35.72a12 12 0 0 1-18.38-15.44a124.1 124.1 0 0 1 48.69-35.75a72 72 0 1 1 89 0a124 124 0 0 1 48.69 35.75M108 148a48 48 0 1 0-48-48a48.05 48.05 0 0 0 48 48"></path>
+                                    </svg>
+                                    立即下载
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="20" height="20" viewBox="0 0 256 256" data-original="&lt;span class=&quot;iconify&quot; data-icon=&quot;ph:arrow-right-bold&quot; data-width=&quot;20&quot;&gt;&lt;/span&gt;" class="iconify">
+                                        <path fill="currentColor" d="m224.49 136.49l-72 72a12 12 0 0 1-17-17L187 140H40a12 12 0 0 1 0-24h147l-51.49-51.52a12 12 0 0 1 17-17l72 72a12 12 0 0 1-.02 17.01"></path>
+                                    </svg>
+                                </a>
+                                <a href="https://discord.gg/zFYV4wr84P" class="bg-white/10 border border-white/20 text-white font-bold text-lg px-8 py-4 rounded-lg flex items-center gap-3 transition-all duration-300 hover:bg-white/20 transform hover:scale-105">
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 256 256" data-original="&lt;span class=&quot;iconify&quot; data-icon=&quot;ph:sign-in-bold&quot; data-width=&quot;24&quot;&gt;&lt;/span&gt;" class="iconify">
+                                        <path fill="currentColor" d="m144.49 136.49l-40 40a12 12 0 0 1-17-17L107 140H24a12 12 0 0 1 0-24h83L87.51 96.49a12 12 0 0 1 17-17l40 40a12 12 0 0 1-.02 17M200 28h-64a12 12 0 0 0 0 24h52v152h-52a12 12 0 0 0 0 24h64a12 12 0 0 0 12-12V40a12 12 0 0 0-12-12"></path>
+                                    </svg>
+                                    加入社区
+                                </a>
+                                <a href="https://github.com/SoarClient-ABC/" class="bg-gray-800/50 border border-gray-600/50 text-white font-bold text-lg px-8 py-4 rounded-lg flex items-center gap-3 transition-all duration-300 hover:bg-gray-700/50 hover:border-gray-500/50 transform hover:scale-105">
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24" data-original="&lt;span class=&quot;iconify&quot; data-icon=&quot;mdi:github&quot; data-width=&quot;24&quot;&gt;&lt;/span&gt;" class="iconify">
+                                        <path fill="currentColor" d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"></path>
+                                    </svg>
+                                    GitHub
+                                </a>
+                            </div>
+                            <div id="ik15l" class="animate-in flex flex-col items-center mt-8" style="animation-delay: 1.2s;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                                    <div class="w-16 h-px bg-gray-500"></div>
+                                    <div class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
+                                    <div class="w-16 h-px bg-gray-500"></div>
+                                    <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+                                </div>
+                                <div class="flex items-center gap-6 mt-4 text-gray-400 text-sm">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>免费使用
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>完全开源
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>超级好用
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <!-- 了解更多箭头 -->
+                      <div id="iugh72" class="animate-in mt-16" style="animation-delay: 1.6s;">
+                          <button id="scrollToFeatures" class="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-all duration-300 group">
+                              <span class="text-sm tracking-wider">了解更多</span>
+                              <div class="flex flex-col gap-1">
+                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 256 256" data-original="&lt;span class=&quot;iconify text-2xl group-hover:translate-y-1 transition-transform duration-300&quot; data-icon=&quot;ph:arrow-down-bold&quot;&gt;&lt;/span&gt;" class="iconify text-2xl group-hover:translate-y-1 transition-transform duration-300 ikrhn6 spark-custom-ikrhn6" id="ikrhn6">
+                                      <path fill="currentColor" d="m208.49 152.49l-72 72a12 12 0 0 1-17 0l-72-72a12 12 0 0 1 17-17L116 187V40a12 12 0 0 1 24 0v147l51.51-51.52a12 12 0 0 1 17 17Z"></path>
+                                  </svg>
+                              </div>
+                          </button>
+                      </div>
+                      <div id="i743u" class="w-full max-w-7xl mt-16 animate-in" style="animation-delay: 1.4s;">
+                          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
+                              <div class="glass-effect rounded-2xl p-6 text-center transition-all duration-300 hover:border-purple-400 hover:scale-105 transform">
+                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="40" height="40" viewBox="0 0 39.7 39.7" data-original="&lt;span class=&quot;iconify text-purple-400 mx-auto&quot; data-icon=&quot;ph:lightning-bold&quot; data-width=&quot;40&quot;&gt;&lt;/span&gt;" class="iconify text-purple-400 mx-auto">
+                                      <path fill="currentColor" d="m35.9,15.2c-1.6-5.4-5.9-9.7-11.3-11.3-.9-.3-1.5-1-1.5-1.9h0c0-1.1-.9-2-2-2h-2.3c-1.1,0-2,.9-2,2h0c0,.9-.6,1.7-1.5,1.9-5.5,1.6-9.8,5.9-11.4,11.3-.3.9-1,1.5-1.9,1.5h0c-1.1,0-2,.9-2,2v2.3c0,1.1.9,2,2,2h0c.9,0,1.7.6,1.9,1.5,1.6,5.5,5.9,9.8,11.3,11.3.9.3,1.5,1,1.5,1.9h0c0,1.1.9,2,2,2h2.3c1.1,0,2-.9,2-2h0c0-.9.6-1.7,1.5-1.9,5.5-1.6,9.8-5.9,11.3-11.3.3-.9,1-1.5,1.9-1.5h0c1.1,0,2-.9,2-2v-2.3c0-1.1-.9-2-2-2h0c-.7,0-1.5-.6-1.8-1.5Zm-12.8,16c-1,.3-2.1.4-3.2.4s-2.2-.2-3.2-.4c-3.9-1.1-7-4.2-8.1-8.1-.3-1-.4-2.1-.4-3.2s.2-2.2.4-3.2c1.1-3.9,4.2-7,8.1-8.1,1-.3,2.1-.4,3.2-.4s2.2.2,3.2.4c3.9,1.1,7,4.2,8.1,8.1.3,1,.4,2.1.4,3.2s-.2,2.2-.4,3.2c-1.1,3.9-4.2,7-8.1,8.1Z"></path>
+                                      <circle fill="currentColor" cx="19.9" cy="19.9" r="3.5"/>
+                                  </svg>
+                                  <p class="text-4xl lg:text-5xl font-bold mt-3">500+</p>
+                                  <p class="text-gray-400 mt-2">FPS提升</p>
+                              </div>
+                              <div class="glass-effect rounded-2xl p-6 text-center transition-all duration-300 hover:border-green-400 hover:scale-105 transform">
+                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="40" height="40" viewBox="0 0 256 256" data-original="&lt;span class=&quot;iconify text-green-400 mx-auto&quot; data-icon=&quot;ph:lightning-bold&quot; data-width=&quot;40&quot;&gt;&lt;/span&gt;" class="iconify text-green-400 mx-auto">
+                                      <path fill="currentColor" d="M219.71 117.38a12 12 0 0 0-7.25-8.52l-51.18-20.47l10.59-70.61a12 12 0 0 0-20.64-10l-112 120a12 12 0 0 0 4.31 19.33l51.18 20.47l-10.59 70.64a12 12 0 0 0 20.64 10l112-120a12 12 0 0 0 2.94-10.84M113.6 203.55l6.27-41.77a12 12 0 0 0-7.41-12.92l-43.72-17.49l73.66-78.92l-6.27 41.77a12 12 0 0 0 7.41 12.92l43.72 17.49Z"></path>
+                                  </svg>
+                                  <p class="text-4xl lg:text-5xl font-bold mt-3">50+</p>
+                                  <p class="text-gray-400 mt-2">内置模块</p>
+                              </div>
+                              <div class="glass-effect rounded-2xl p-6 text-center transition-all duration-300 hover:border-blue-400 hover:scale-105 transform">
+                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="40" height="40" viewBox="0 0 256 256" data-original="&lt;span class=&quot;iconify text-blue-400 mx-auto&quot; data-icon=&quot;ph:users-three-bold&quot; data-width=&quot;40&quot;&gt;&lt;/span&gt;" class="iconify text-blue-400 mx-auto">
+                                      <path fill="currentColor" d="M164.38 181.1a52 52 0 1 0-72.76 0a75.9 75.9 0 0 0-30 28.89a12 12 0 0 0 20.78 12a53 53 0 0 1 91.22 0a12 12 0 1 0 20.78-12a75.9 75.9 0 0 0-30.02-28.89M100 144a28 28 0 1 1 28 28a28 28 0 0 1-28-28m147.21 9.59a12 12 0 0 1-16.81-2.39c-8.33-11.09-19.85-19.59-29.33-21.64a12 12 0 0 1-1.82-22.91a20 20 0 1 0-24.78-28.3a12 12 0 1 1-21-11.6a44 44 0 1 1 73.28 48.35a92.2 92.2 0 0 1 22.85 21.69a12 12 0 0 1-2.39 16.8m-192.28-24c-9.48 2.05-21 10.55-29.33 21.65a12 12 0 0 1-19.19-14.45a92.4 92.4 0 0 1 22.85-21.69a44 44 0 1 1 73.28-48.35a12 12 0 1 1-21 11.6a20 20 0 1 0-24.78 28.3a12 12 0 0 1-1.82 22.91Z"></path>
+                                  </svg>
+                                  <p class="text-4xl lg:text-5xl font-bold mt-3">1k+</p>
+                                  <p class="text-gray-400 mt-2">下载量</p>
+                              </div>
+                              <div class="glass-effect rounded-2xl p-6 text-center transition-all duration-300 hover:border-yellow-400 hover:scale-105 transform">
+                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="40" height="40" viewBox="0 0 256 256" data-original="&lt;span class=&quot;iconify text-yellow-400 mx-auto&quot; data-icon=&quot;ph:timer-bold&quot; data-width=&quot;40&quot;&gt;&lt;/span&gt;" class="iconify text-yellow-400 mx-auto">
+                                      <path fill="currentColor" d="M128 44a96 96 0 1 0 96 96a96.11 96.11 0 0 0-96-96m0 168a72 72 0 1 1 72-72a72.08 72.08 0 0 1-72 72m36.49-112.49a12 12 0 0 1 0 17l-28 28a12 12 0 0 1-17-17l28-28a12 12 0 0 1 17 0M92 16a12 12 0 0 1 12-12h48a12 12 0 0 1 0 24h-48a12 12 0 0 1-12-12"></path>
+                                  </svg>
+                                  <p class="text-4xl lg:text-5xl font-bold mt-3">99.9%</p>
+                                  <p class="text-gray-400 mt-2">稳定运行</p>
+                              </div>
+                              <div class="glass-effect rounded-2xl p-6 text-center transition-all duration-300 hover:border-red-400 hover:scale-105 transform">
+                                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="40" height="40" viewBox="0 0 256 256" data-original="&lt;span class=&quot;iconify text-red-400 mx-auto&quot; data-icon=&quot;ph:stack-bold&quot; data-width=&quot;40&quot;&gt;&lt;/span&gt;" class="iconify text-red-400 mx-auto">
+                                      <path fill="currentColor" d="M234.36 170a12 12 0 0 1-4.36 16.37l-96 56a12 12 0 0 1-12.1 0l-96-56a12 12 0 0 1 12.09-20.74l90 52.48L218 165.63a12 12 0 0 1 16.36 4.37M218 117.63l-90 52.48l-89.95-52.48A12 12 0 0 0 26 138.37l96 56a12 12 0 0 0 12.1 0l96-56a12 12 0 0 0-12.1-20.74M20 80a12 12 0 0 1 6-10.37l96-56a12.06 12.06 0 0 1 12.1 0l96 56a12 12 0 0 1 0 20.74l-96 56a12 12 0 0 1-12.1 0l-96-56A12 12 0 0 1 20 80m35.82 0L128 122.11L200.18 80L128 37.89Z"></path>
+                                  </svg>
+                                  <p class="text-4xl lg:text-5xl font-bold mt-3">100+</p>
+                                  <p class="text-gray-400 mt-2">社区成员</p>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                </section>
+            </div>
+            <!-- 功能介绍区域 -->
+            <div data-section-id="FeaturesSection" data-section-type="section" id="featuresSection" class="relative">
+                <!-- 性能优化 -->
+                <section class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-purple-900/20 to-blue-900/20">
+                    <div class="absolute inset-0 bg-[#0D0E1A]/80"></div>
+                    <div class="container mx-auto px-6 relative z-10">
+                        <div class="grid lg:grid-cols-2 gap-16 items-center">
+                            <div class="space-y-8">
+                                <div class="animate-in inline-flex items-center gap-3 bg-gradient-to-r from-purple-400/10 to-blue-400/10 backdrop-blur-xl rounded-full px-6 py-2 border border-white/20 mb-6">
+                                    <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">性能优化</span>
+                                    <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                                </div>
+                                <h2 class="text-5xl lg:text-6xl font-black tracking-tight">
+                                    极致<span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">性能</span>
+                                </h2>
+                                <p class="text-xl text-gray-300 leading-relaxed">
+                                    通过先进的渲染优化技术，SoarClient 能够显著提升游戏帧率，减少卡顿，让你的《我的世界》体验更加流畅。
+                                </p>
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                                        <span class="iconify text-green-400 text-2xl" data-icon="ph:lightning-bold"></span>
+                                        <div>
+                                            <h4 class="font-bold text-white">智能渲染优化</h4>
+                                            <p class="text-gray-400">动态调整渲染距离和细节级别</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                                        <span class="iconify text-blue-400 text-2xl" data-icon="ph:cpu-bold"></span>
+                                        <div>
+                                            <h4 class="font-bold text-white">内存管理</h4>
+                                            <p class="text-gray-400">
+                                                优化内存使用，减少垃圾回收延迟
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                                        <span class="iconify text-purple-400 text-2xl" data-icon="ph:gauge-bold"></span>
+                                        <div>
+                                            <h4 class="font-bold text-white">FPS 稳定器</h4>
+                                            <p class="text-gray-400">保持稳定的帧率输出</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="glass-effect rounded-2xl p-8 text-center">
+                                    <div class="comparison-table-container">
+                                        <p>各个客户端性能比较</p>
+                                        <table class="comparison-table">
+                                            <thead>
+                                            <tr>
+                                                <th>客户端</th>
+                                                <th>
+                                                    <img src="https://assets.badlion.net/site/homepage/fps-mod-icon-minecraft.png" alt="Minecraft Icon" class="client-logo">
+                                                </th>
+                                                <th>
+                                                    <img src="https://assets.badlion.net/site/homepage/fps-mod-icon-lunar.png" alt="Lunar Client Icon" class="client-logo">
+                                                </th>
+                                                <th>
+                                                    <img src="https://assets.badlion.net/site/homepage/fps-mod-icon-labymod.png" alt="LabyMod Icon" class="client-logo">
+                                                </th>
+                                                <th>
+                                                    <img src="./assets/images/soarlogo_64.png" alt="SoarClient Icon" class="client-logo">
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>FPS</td>
+                                                <td class="fps-value">520</td>
+                                                <td class="fps-value">1090</td>
+                                                <td class="fps-value">1145</td>
+                                                <td class="fps-value0"><span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-400">1600+</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mods</td>
+                                                <td class="mods-value">0</td>
+                                                <td class="mods-value">77</td>
+                                                <td class="mods-value">30</td>
+                                                <td class="mods-value0"><span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-400">100+</span></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="action-buttons">
+                                            <a href="#" class="test-link">测试配置</a>
+                                            <button id="download-button-link" class="download-button">下载客户端</button>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-4">
+                                        <div class="text-center">
+                                            <p class="text-3xl font-bold text-green-400">300%+</p>
+                                            <p class="text-gray-400">FPS 提升</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-3xl font-bold text-blue-400">50%</p>
+                                            <p class="text-gray-400">内存优化</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-3xl font-bold text-purple-400">99.9%</p>
+                                            <p class="text-gray-400">稳定性</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- 视觉增强 -->
+                <section class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-green-900/20 to-teal-900/20">
+                    <div class="absolute inset-0 bg-[#0D0E1A]/80"></div>
+                    <div class="container mx-auto px-6 relative z-10">
+                        <div class="grid lg:grid-cols-2 gap-16 items-center">
+                            <div class="relative order-2 lg:order-1">
+                                <div class="glass-effect rounded-2xl p-8">
+                                    <img alt="视觉效果展示" class="w-full rounded-lg mb-6" data-src="placehold.co/600x400.png?text=Beautiful+Minecraft+Shaders+and+Visual+Effects">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="glass-effect rounded-lg p-4 text-center">
+                                            <span class="iconify text-green-400 text-3xl mb-2" data-icon="ph:eye-bold"></span>
+                                            <p class="font-bold">光影支持</p>
+                                        </div>
+                                        <div class="glass-effect rounded-lg p-4 text-center">
+                                            <span class="iconify text-teal-400 text-3xl mb-2" data-icon="ph:palette-bold"></span>
+                                            <p class="font-bold">材质优化</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-8 order-1 lg:order-2">
+                                <div class="animate-in inline-flex items-center gap-3 bg-gradient-to-r from-green-400/10 to-teal-400/10 backdrop-blur-xl rounded-full px-6 py-2 border border-white/20 mb-6">
+                                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-400">视觉增强</span>
+                                    <div class="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div>
+                                </div>
+                                <h2 class="text-5xl lg:text-6xl font-black tracking-tight">
+                                    精美<span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-400">视觉</span>
+                                </h2>
+                                <p class="text-xl text-gray-300 leading-relaxed">
+                                    内置多种光影效果和视觉增强功能，让你的《我的世界》世界更加绚丽多彩，沉浸感十足。
+                                </p>
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                                        <span class="iconify text-green-400 text-2xl" data-icon="ph:sun-bold"></span>
+                                        <div>
+                                            <h4 class="font-bold text-white">动态光影</h4>
+                                            <p class="text-gray-400">实时光线追踪和阴影渲染</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                                        <span class="iconify text-teal-400 text-2xl" data-icon="ph:drop-bold"></span>
+                                        <div>
+                                            <h4 class="font-bold text-white">水面反射</h4>
+                                            <p class="text-gray-400">逼真的水面波纹和反射效果</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                                        <span class="iconify text-blue-400 text-2xl" data-icon="ph:cloud-bold"></span>
+                                        <div>
+                                            <h4 class="font-bold text-white">天空盒优化</h4>
+                                            <p class="text-gray-400">动态天空和云层系统</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- 模块功能 -->
+                <section class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-orange-900/20 to-red-900/20">
+                    <div class="absolute inset-0 bg-[#0D0E1A]/80"></div>
+                    <div class="container mx-auto px-6 relative z-10">
+                        <div class="text-center mb-16">
+                            <div class="animate-in inline-flex items-center gap-3 bg-gradient-to-r from-orange-400/10 to-red-400/10 backdrop-blur-xl rounded-full px-6 py-2 border border-white/20 mb-6">
+                                <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">性能优化</span>
+                                <div class="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+                            </div>
+                            <h2 class="text-5xl lg:text-6xl font-black tracking-tight mb-8">
+                                强大<span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">模块</span>
+                            </h2>
+                            <p class="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+                                内置50+实用模块，涵盖PVP、建筑、探索等各个方面，满足不同玩家的需求。
+                            </p>
+                        </div>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="glass-effect rounded-2xl p-6 text-center hover:border-orange-400 transition-all duration-300 hover:scale-105">
+                                <span class="iconify text-orange-400 text-4xl mb-4" data-icon="ph:sword-bold"></span>
+                                <h3 class="text-xl font-bold mb-3">PVP 模块</h3>
+                                <p class="text-gray-400 mb-4">
+                                    自动连击、瞄准辅助、血量显示等PVP必备功能
+                                </p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="bg-orange-500/20 text-orange-300 px-2 py-1 rounded text-xs">自动连击</span><span class="bg-orange-500/20 text-orange-300 px-2 py-1 rounded text-xs">瞄准辅助</span><span class="bg-orange-500/20 text-orange-300 px-2 py-1 rounded text-xs">血量显示</span>
+                                </div>
+                            </div>
+                            <div class="glass-effect rounded-2xl p-6 text-center hover:border-blue-400 transition-all duration-300 hover:scale-105">
+                                <span class="iconify text-blue-400 text-4xl mb-4" data-icon="ph:cube-bold"></span>
+                                <h3 class="text-xl font-bold mb-3">建筑模块</h3>
+                                <p class="text-gray-400 mb-4">
+                                    快速建造、结构复制、材料计算等建筑辅助工具
+                                </p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs">快速建造</span><span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs">结构复制</span><span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs">材料计算</span>
+                                </div>
+                            </div>
+                            <div class="glass-effect rounded-2xl p-6 text-center hover:border-green-400 transition-all duration-300 hover:scale-105">
+                                <span class="iconify text-green-400 text-4xl mb-4" data-icon="ph:compass-bold"></span>
+                                <h3 class="text-xl font-bold mb-3">探索模块</h3>
+                                <p class="text-gray-400 mb-4">
+                                    矿物探测、地图标记、路径规划等探索助手
+                                </p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="bg-green-500/20 text-green-300 px-2 py-1 rounded text-xs">矿物探测</span><span class="bg-green-500/20 text-green-300 px-2 py-1 rounded text-xs">地图标记</span><span class="bg-green-500/20 text-green-300 px-2 py-1 rounded text-xs">路径规划</span>
+                                </div>
+                            </div>
+                            <div class="glass-effect rounded-2xl p-6 text-center hover:border-purple-400 transition-all duration-300 hover:scale-105">
+                                <span class="iconify text-purple-400 text-4xl mb-4" data-icon="ph:gear-bold"></span>
+                                <h3 class="text-xl font-bold mb-3">实用工具</h3>
+                                <p class="text-gray-400 mb-4">
+                                    背包整理、物品搜索、快捷操作等便民功能
+                                </p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">背包整理</span><span class="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">物品搜索</span><span class="bg-purple-500/20 text-purple-300 px-2 py-1 rounded text-xs">快捷操作</span>
+                                </div>
+                            </div>
+                            <div class="glass-effect rounded-2xl p-6 text-center hover:border-pink-400 transition-all duration-300 hover:scale-105">
+                                <span class="iconify text-pink-400 text-4xl mb-4" data-icon="ph:shield-check-bold"></span>
+                                <h3 class="text-xl font-bold mb-3">安全防护</h3>
+                                <p class="text-gray-400 mb-4">
+                                    反作弊检测、数据加密、隐私保护等安全功能
+                                </p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">反作弊</span><span class="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">数据加密</span><span class="bg-pink-500/20 text-pink-300 px-2 py-1 rounded text-xs">隐私保护</span>
+                                </div>
+                            </div>
+                            <div class="glass-effect rounded-2xl p-6 text-center hover:border-yellow-400 transition-all duration-300 hover:scale-105">
+                                <span class="iconify text-yellow-400 text-4xl mb-4" data-icon="ph:users-bold"></span>
+                                <h3 class="text-xl font-bold mb-3">社交功能</h3>
+                                <p class="text-gray-400 mb-4">
+                                    好友系统、语音聊天、团队协作等社交工具
+                                </p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded text-xs">好友系统</span><span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded text-xs">语音聊天</span><span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded text-xs">团队协作</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- 社区生态 -->
+                <section class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-indigo-900/20 to-purple-900/20">
+                    <div class="absolute inset-0 bg-[#0D0E1A]/80"></div>
+                    <div class="container mx-auto px-6 relative z-10">
+                        <div class="grid lg:grid-cols-2 gap-16 items-center">
+                            <div class="space-y-8">
+                                <div class="animate-in inline-flex items-center gap-3 bg-gradient-to-r from-indigo-400/10 to-purple-400/10 backdrop-blur-xl rounded-full px-6 py-2 border border-white/20 mb-6">
+                                    <div class="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></div>
+                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">社区生态</span>
+                                    <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                                </div>
+                                <h2 class="text-5xl lg:text-6xl font-black tracking-tight">
+                                    活跃<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">社区</span>
+                                </h2>
+                                <p class="text-xl text-gray-300 leading-relaxed">
+                                    加入200K+活跃玩家社区，分享经验、交流技巧、参与活动，与志同道合的朋友一起探索《我的世界》的无限可能。
+                                </p>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="glass-effect rounded-lg p-6 text-center">
+                                        <span class="iconify text-indigo-400 text-3xl mb-3" data-icon="ri:discord-fill"></span>
+                                        <h4 class="font-bold text-white mb-2">Discord 社区</h4>
+                                        <p class="text-2xl font-bold text-indigo-400"><span id="discord-online-count">加载中...</span></p>
+                                        <p class="text-gray-400 text-sm">在线人数</p>
+                                    </div>
+                                    <div class="glass-effect rounded-lg p-6 text-center">
+                                        <span class="iconify text-pink-400 text-3xl mb-3" data-icon="ri:bilibili-fill"></span>
+                                        <h4 class="font-bold text-white mb-2">Bilibili 频道</h4>
+                                        <p class="text-2xl font-bold text-pink-400">48</p>
+                                        <p class="text-gray-400 text-sm">关注者</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="glass-effect rounded-2xl p-8">
+                                    <img alt="社区内容展示" class="w-full rounded-lg mb-6" src="./assets/images/discord.png">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
+                                            <div class="w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">
+                                                AB
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-bold text-white">ABCOC</p>
+                                                <p class="text-gray-400 text-sm">
+                                                    很难想象这世界上存在视觉这么优秀的客户端！
+                                                </p>
+                                            </div>
+                                            <span class="iconify text-red-400" data-icon="ph:heart-fill"></span>
+                                        </div>
+                                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
+                                            <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold">
+                                                BG
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-bold text-white">BuilderGamer</p>
+                                                <p class="text-gray-400 text-sm">
+                                                    性能提升太明显了，FPS直接翻倍！
+                                                </p>
+                                            </div>
+                                            <span class="iconify text-red-400" data-icon="ph:heart-fill"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div data-section-id="Footer" data-section-type="footer" class="bg-[#0D0E1A]/95 border-t border-white/10">
+                <footer class="container mx-auto px-6 py-16">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                        <!-- 联系我们 -->
+                        <div class="footer-section group">
+                            <h3 class="text-xl font-bold mb-6 text-white group-hover:text-purple-400 transition-colors duration-300">
+                                联系我们
+                            </h3>
+                            <div class="flex flex-col gap-6">
+                                <a href="mailto:contact@soarclient.org" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2"><span class="iconify text-purple-400" data-icon="ph:envelope-bold" data-width="20"></span><span>contact@soarclient.org</span></a><a href="#" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2"><span class="iconify text-purple-400" data-icon="ph:chat-circle-bold" data-width="20"></span><span>在线客服</span></a><a href="#" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2"><span class="iconify text-purple-400" data-icon="ph:phone-bold" data-width="20"></span><span>技术支持热线</span></a>
+                            </div>
+                        </div>
+                        <!-- 帮助支持 -->
+                        <div class="footer-section group">
+                            <h3 class="text-xl font-bold mb-6 text-white group-hover:text-blue-400 transition-colors duration-300">
+                                帮助支持
+                            </h3>
+                            <div class="flex flex-col gap-6">
+                                <a href="#" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2"><span class="iconify text-blue-400" data-icon="ph:book-bold" data-width="20"></span><span>使用文档</span></a><a href="#" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2"><span class="iconify text-blue-400" data-icon="ph:question-bold" data-width="20"></span><span>常见问题</span></a><a href="#" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2"><span class="iconify text-blue-400" data-icon="ph:wrench-bold" data-width="20"></span><span>故障排除</span></a><a href="#" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2"><span class="iconify text-blue-400" data-icon="ph:video-bold" data-width="20"></span><span>视频教程</span></a>
+                            </div>
+                        </div>
+                        <!-- 关注我们 -->
+                        <div class="footer-section group">
+                            <h3 class="text-xl font-bold mb-6 text-white group-hover:text-green-400 transition-colors duration-300">
+                                关注我们
+                            </h3>
+                            <div class="flex flex-col gap-6">
+                                <a href="https://discord.gg/zFYV4wr84P" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 group/link"><span class="iconify text-indigo-400 group-hover/link:text-indigo-300 transition-colors duration-300" data-icon="ri:discord-fill" data-width="20"></span><span>Discord 社区</span><span class="iconify opacity-0 group-hover/link:opacity-100 transition-opacity duration-300" data-icon="ph:arrow-square-out-bold" data-width="16"></span></a><a href="https://space.bilibili.com/395383725" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 group/link"><span class="iconify text-pink-400 group-hover/link:text-pink-300 transition-colors duration-300" data-icon="ri:bilibili-fill" data-width="20"></span><span>Bilibili 频道</span><span class="iconify opacity-0 group-hover/link:opacity-100 transition-opacity duration-300" data-icon="ph:arrow-square-out-bold" data-width="16"></span></a><a href="https://github.com/SoarClient-ABC/" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 group/link"><span class="iconify text-gray-400 group-hover/link:text-gray-300 transition-colors duration-300" data-icon="mdi:github" data-width="20"></span><span>GitHub 仓库</span><span class="iconify opacity-0 group-hover/link:opacity-100 transition-opacity duration-300" data-icon="ph:arrow-square-out-bold" data-width="16"></span></a><a href="https://qm.qq.com/q/SnGjb9vSIc" class="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 group/link"><span class="iconify text-blue-400 group-hover/link:text-blue-300 transition-colors duration-300" data-icon="ri:qq-fill" data-width="20"></span><span>QQ 群组</span><span class="iconify opacity-0 group-hover/link:opacity-100 transition-opacity duration-300" data-icon="ph:arrow-square-out-bold" data-width="16"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 底部版权信息 -->
+                    <div class="border-t border-white/10 mt-12 pt-8 text-center">
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div class="flex items-center gap-4">
+                                <img alt="SoarClient Logo" class="w-8 h-8 rounded-md" src="./assets/images/soarlogo_64.png"><span class="text-gray-400">© 2024-2025 SoarClient-ABC. 保留所有权利。</span>
+                            </div>
+                            <div class="flex items-center gap-6 text-sm text-gray-400">
+                                <a href="#" class="hover:text-white transition-colors duration-300">隐私政策</a><a href="#" class="hover:text-white transition-colors duration-300">服务条款</a><a href="#" class="hover:text-white transition-colors duration-300">Cookie 政策</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </main>
+        <div class="fixed bottom-5 right-5 z-50"></div>
+    </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const navItems = document.querySelectorAll(".nav-item");
+        const indicator = document.querySelector(".nav-indicator");
+        
+        function updateIndicator(activeItem) {
+            const rect = activeItem.getBoundingClientRect();
+            const parentRect = activeItem.parentElement.getBoundingClientRect();
+            const left = rect.left - parentRect.left;
+            const width = rect.width;
+            
+            indicator.style.left = left + "px";
+            indicator.style.width = width + "px";
+            indicator.style.opacity = "1";
+        }
+        
+        // 初始化指示器位置
+        const activeItem = document.querySelector(".nav-item.active");
+        if (activeItem) {
+            updateIndicator(activeItem);
+        }
+        
+        // 为每个导航项添加点击事件
+        navItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                if (this.hasAttribute("data-scroll")) {
+                    e.preventDefault();
+                }
+                // 移除所有active类
+                navItems.forEach(nav => nav.classList.remove("active"));
+                // 为当前项添加active类
+                this.classList.add("active");
+                // 更新指示器位置
+                updateIndicator(this);
+            });
+            
+            // 鼠标悬停效果
+            item.addEventListener("mouseenter", function() {
+                if (!this.classList.contains("active")) {
+                    updateIndicator(this);
+                }
+            });
+        });
+        
+        // 鼠标离开导航区域时，恢复到active项
+        document.getElementById("iyazq").addEventListener("mouseleave", function() {
+            const activeItem = document.querySelector(".nav-item.active");
+            if (activeItem) {
+                updateIndicator(activeItem);
+            }
+        });
+        
+        // 滚动到功能介绍区域
+        const scrollToFeaturesBtn = document.getElementById("scrollToFeatures");
+        const scrollToFeatures0Btn = document.getElementById("scrollToFeatures0");
+        const featuresSection = document.getElementById("featuresSection");
+
+        if (scrollToFeaturesBtn && featuresSection) {
+            scrollToFeaturesBtn.addEventListener("click", scrollToFeatures);
+        }
+        if (scrollToFeatures0Btn && featuresSection) {
+            scrollToFeatures0Btn.addEventListener("click", scrollToFeatures);
+        }
+
+        function scrollToFeatures() {
+            featuresSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        const scrollToMainBtn = document.getElementById("scrollToMain");
+        const mainSection = document.getElementById("mainSection");
+
+        if (scrollToMainBtn && mainSection) {
+            scrollToMainBtn.addEventListener("click", function() {
+                mainSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            });
+        }
+
+        // 滚动时的颜色块变化效果
+        const sections = document.querySelectorAll("#featuresSection section");
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: "0px 0px -20% 0px"
+        };
+        
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    sections.forEach(section => {
+                        section.classList.remove("section-active");
+                    });
+                    entry.target.classList.add("section-active");
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        const sectionMap = {
+            home:      document.getElementById('mainSection'),
+            features:  document.getElementById('featuresSection'),
+            download:  document.getElementById('downloadSection'),
+            doc:       document.getElementById('docSection'),
+            community: document.getElementById('communitySection'),
+            ecosystem: document.getElementById('ecosystemSection'),
+            about:     document.getElementById('aboutSection'),
+        };
+
+        const scrollSpy = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const key = Object.keys(sectionMap).find(k => sectionMap[k] === entry.target);
+                    if (!key) return;
+                    navItems.forEach(n => n.classList.remove('active'));
+                    const newNav = document.querySelector(`.nav-item[data-nav="${key}"]`);
+                    newNav.classList.add('active');
+                    updateIndicator(newNav);
+                }
+            });
+        }, {
+            rootMargin: '-50% 0px -50% 0px',
+            threshold: 0
+        });
+
+        Object.values(sectionMap).forEach(sec => {
+            if (sec) scrollSpy.observe(sec);
+        });
+
+        const downloadButton = document.getElementById('download-button-link');
+        if (downloadButton) {
+            downloadButton.addEventListener('click', function() {
+                window.location.href = 'https://soarclient.org/download';
+            });
+        }
+    });
+
+        async function getBilibiliFollowerCount() {
+            const url = "https://api.bilibili.com/x/relation/stat?vmid=395383725&web_location=333.1387";
+            const followerCountElement = document.getElementById("bilibili-follower-count");
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('网络请求失败');
+                }
+                const data = await response.json();
+
+                if (data && data.data && data.data.follower !== undefined) {
+                    const followerCount = data.data.follower;
+                    followerCountElement.textContent = followerCount;
+                } else {
+                    followerCountElement.textContent = "获取失败";
+                    console.error('API返回数据结构不正确:', data);
+                }
+            } catch (error) {
+                followerCountElement.textContent = "加载失败";
+                console.error('获取B站粉丝数时发生错误:', error);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', getBilibiliFollowerCount);
+
+        async function updateDiscordOnlineCount() {
+            const guildId = '694416477637443614';
+            const apiUrl = `https://discord.com/api/guilds/${guildId}/widget.json`;
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error('无法获取 Discord 小组件数据。请检查服务器 ID 或小组件设置。');
+                }
+                const data = await response.json();
+                const onlineCount = data.presence_count;
+                const countElement = document.getElementById('discord-online-count');
+                if (countElement) {
+                    countElement.textContent = onlineCount;
+                }
+            } catch (error) {
+                console.error('获取 Discord 在线人数时发生错误:', error);
+                const countElement = document.getElementById('discord-online-count');
+                if (countElement) {
+                    countElement.textContent = '获取失败';
+                }
+            }
+        }
+        document.addEventListener('DOMContentLoaded', updateDiscordOnlineCount);
+</script>
+  
+    <script>
+    setTimeout(() => {
+      Holder.run({
+        domain: "placehold.co"
+      })
+    }, 100)
+    </script>
+</body>
+</html>
