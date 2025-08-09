@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/download", "destination": "/SoarLauncher-Setup.exe" }
+    { "source": "/download", "destination": "/release/SoarLauncher-Setup.exe" }
   ],
   "headers": [
     {
